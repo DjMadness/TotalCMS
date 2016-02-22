@@ -1,4 +1,5 @@
 <?php
+
 class Navigation extends D {
     public $Database;
     public function __construct() {
@@ -7,7 +8,7 @@ class Navigation extends D {
     private function Placeholder() {
         $this->Database = new Database();
     }
-    public function AddNav($name, $url, $position,  $image = null) {
+    public function AddNav($name, $url, $type, $position, $imageId = null) {
         
     }
     public function DelNav($navid) {

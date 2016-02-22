@@ -15,7 +15,7 @@ class User extends D {
         $this->Database->Bind('string', ':usersUsername', Validate::SanitizeString($username));
         $this->Database->Bind('string', ':usersPassword', password_hash($password, PASSWORD_BCRYPT));
         $query = $this->Database->Insert('users', 'usersUsername,usersPassword', ':usersUsername,:usersPassword');
-        return $query >= 1 ? true : false;
+        return $query != 0 ? true : false;
     }
     public function ChangeUsername($userid, $username) {
         if ($this->GetUsernameById($userid) == false) return false; // user does not exist

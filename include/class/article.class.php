@@ -14,7 +14,7 @@ class Article extends D {
     public function DelArticle($articleId) {
         
     }
-    public function EditArticle() {
+    public function EditArticle($articleId, $title, $text) {
         
     }
     public function ViewArticle($articleId) {
@@ -27,6 +27,12 @@ class Article extends D {
         
     }
     public function VoteArticle($articleId, $vote) {
+        
+    }
+    public function SetArticleMeta($articleId, $setting, $value) {
+        
+    }
+    public function GetArticleMeta($articleId, $setting) {
         
     }
     public function GetComments($articleId) {

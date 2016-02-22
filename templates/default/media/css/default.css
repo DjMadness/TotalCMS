@@ -1,0 +1,28 @@
+html {
+    font-size: 10pt;
+    font-family: verdana;
+}
+body {
+    font-size: 1.2rem   
+} 
+* {
+    margin: 0;
+    padding: 0;
+}
+input[type='submit'],input[type='button'],input[type='text'], button  {
+    padding: 2px 5px 2px 5px;
+}
+button a {
+    color: black;
+    cursor: default;
+    text-decoration: none;
+}
+#footer {
+    text-align: center;
+}
+.table_list tbody tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+.table_list tbody tr:nth-child(odd) {
+    background-color: #bdc3c7;
+}

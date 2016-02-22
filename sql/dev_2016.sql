@@ -1,42 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 4.5.4.1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Feb 22, 2016 at 01:24 AM
--- Server version: 5.6.28-log
--- PHP Version: 5.6.18-pl0-gentoo
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `dev_2016`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `access`
---
 
 CREATE TABLE `access` (
   `accessId` int(11) NOT NULL,
   `access_fk_rolesId` int(11) NOT NULL,
   `access_fk_usersId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `articles`
---
 
 CREATE TABLE `articles` (
   `articlesId` int(11) NOT NULL,
@@ -46,12 +15,6 @@ CREATE TABLE `articles` (
   `articlesText` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `articles_comments`
---
-
 CREATE TABLE `articles_comments` (
   `articles_commentsId` int(11) NOT NULL,
   `articles_commentsDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -60,12 +23,6 @@ CREATE TABLE `articles_comments` (
   `articles_commentsText` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `articles_meta`
---
-
 CREATE TABLE `articles_meta` (
   `articles_metaId` int(11) NOT NULL,
   `articles_meta_fk_articlesId` int(11) NOT NULL,
@@ -73,23 +30,27 @@ CREATE TABLE `articles_meta` (
   `articles_metaValue` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+CREATE TABLE `image` (
+  `imageId` int(11) NOT NULL,
+  `imageFilename` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+  `imageDescription` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+  `imageDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
 
---
--- Table structure for table `permissions`
---
+CREATE TABLE `navigation` (
+  `navigationId` int(11) NOT NULL,
+  `navigationName` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+  `navigationLink` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+  `navigationType` varchar(128) COLLATE utf8_danish_ci NOT NULL,
+  `navigation_fk_imageId` int(11) DEFAULT NULL,
+  `navigationPos` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
 
 CREATE TABLE `permissions` (
   `permissionsId` int(11) NOT NULL,
   `permissionsName` varchar(255) COLLATE utf8_danish_ci NOT NULL,
   `permissions_fk_roleId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `requirement`
---
 
 CREATE TABLE `requirement` (
   `requirementId` int(11) NOT NULL,
@@ -98,20 +59,10 @@ CREATE TABLE `requirement` (
   `requirement_fk_permissionsName` varchar(255) COLLATE utf8_danish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `roles`
---
-
 CREATE TABLE `roles` (
   `rolesId` int(11) NOT NULL,
   `rolesName` varchar(255) COLLATE utf8_danish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
-
---
--- Dumping data for table `roles`
---
 
 INSERT INTO `roles` (`rolesId`, `rolesName`) VALUES
 (2, 'Admin'),
@@ -121,21 +72,11 @@ INSERT INTO `roles` (`rolesId`, `rolesName`) VALUES
 (4, 'Superuser'),
 (5, 'User');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `settings`
---
-
 CREATE TABLE `settings` (
   `settingsId` int(11) NOT NULL,
   `settingsName` varchar(128) NOT NULL,
   `settingsValue` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `settings`
---
 
 INSERT INTO `settings` (`settingsId`, `settingsName`, `settingsValue`) VALUES
 (1, 'admin_email', 'djmadness@totalirc.net'),
@@ -147,22 +88,12 @@ INSERT INTO `settings` (`settingsId`, `settingsName`, `settingsValue`) VALUES
 (10, 'website_charset', 'utf-8'),
 (11, 'website_title', 'Project title');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
 CREATE TABLE `users` (
   `usersId` int(11) NOT NULL,
   `usersUsername` varchar(64) NOT NULL,
   `usersPassword` varchar(128) NOT NULL,
   `usersDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `users`
---
 
 INSERT INTO `users` (`usersId`, `usersUsername`, `usersPassword`, `usersDate`) VALUES
 (1, 'DjMadness', '$2y$10$cRusDtIvUFmlc.DNK2dp1uIDQSTjwsJhGWH138NgvTZviIZ8deLXO', '2016-02-16 11:42:58'),
@@ -422,22 +353,12 @@ INSERT INTO `users` (`usersId`, `usersUsername`, `usersPassword`, `usersDate`) V
 (285, 'rand_user36901', '$2y$10$5gRkULWd8VDCvaFxKbexcemOI89Ubw9uNThCS.W2Xd4tvzoyCOI7.', '2016-02-16 11:55:13'),
 (286, 'rand_user58349', '$2y$10$5zccwK02.8PaEjScl014X.YsBXT90Ff8kxsOLWP5GRvA9Eo5M0mgq', '2016-02-16 11:55:13');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users_meta`
---
-
 CREATE TABLE `users_meta` (
   `users_metaId` int(11) NOT NULL,
   `users_metaSetting` varchar(128) NOT NULL,
   `users_metaValue` varchar(255) NOT NULL,
   `users_meta_fk_usersId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `users_meta`
---
 
 INSERT INTO `users_meta` (`users_metaId`, `users_metaSetting`, `users_metaValue`, `users_meta_fk_usersId`) VALUES
 (1, 'email', 'DjMadness@TotalIRC.Net', 1),
@@ -697,22 +618,12 @@ INSERT INTO `users_meta` (`users_metaId`, `users_metaSetting`, `users_metaValue`
 (284, 'email', 'rand_user36901@gmail.com', 285),
 (285, 'email', 'rand_user58349@gmail.com', 286);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users_profile`
---
-
 CREATE TABLE `users_profile` (
   `users_profileId` int(11) NOT NULL,
   `users_profileSetting` varchar(254) DEFAULT NULL,
   `users_profileValue` text,
   `users_profile_fk_usersId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `users_profile`
---
 
 INSERT INTO `users_profile` (`users_profileId`, `users_profileSetting`, `users_profileValue`, `users_profile_fk_usersId`) VALUES
 (1, 'profiletext', 'some text', 1),
@@ -972,146 +883,82 @@ INSERT INTO `users_profile` (`users_profileId`, `users_profileSetting`, `users_p
 (285, 'profiletext', 'some text', 285),
 (286, 'profiletext', 'some text', 286);
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `access`
---
 ALTER TABLE `access`
   ADD PRIMARY KEY (`accessId`),
   ADD KEY `access_fk_rolesId` (`access_fk_rolesId`),
   ADD KEY `access_fk_usersId` (`access_fk_usersId`);
 
---
--- Indexes for table `articles`
---
 ALTER TABLE `articles`
   ADD PRIMARY KEY (`articlesId`),
   ADD KEY `articles_fk_usersId` (`articles_fk_usersId`);
 
---
--- Indexes for table `articles_comments`
---
 ALTER TABLE `articles_comments`
   ADD PRIMARY KEY (`articles_commentsId`),
   ADD KEY `articles_comments_fk_articlesId` (`articles_comments_fk_articlesId`,`articles_comments_fk_usersId`);
 
---
--- Indexes for table `articles_meta`
---
 ALTER TABLE `articles_meta`
   ADD PRIMARY KEY (`articles_metaId`),
   ADD KEY `articles_meta_fk_articlesId` (`articles_meta_fk_articlesId`);
 
---
--- Indexes for table `permissions`
---
+ALTER TABLE `image`
+  ADD PRIMARY KEY (`imageId`);
+
+ALTER TABLE `navigation`
+  ADD PRIMARY KEY (`navigationId`),
+  ADD KEY `navigation_fk_imageId` (`navigation_fk_imageId`);
+
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`permissionsId`),
   ADD KEY `permissions_fk_roleId` (`permissions_fk_roleId`);
 
---
--- Indexes for table `requirement`
---
 ALTER TABLE `requirement`
   ADD PRIMARY KEY (`requirementId`),
   ADD KEY `requirement_fk_permissionsName` (`requirement_fk_permissionsName`);
 
---
--- Indexes for table `roles`
---
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`rolesId`),
   ADD UNIQUE KEY `rolesName` (`rolesName`);
 
---
--- Indexes for table `settings`
---
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`settingsId`);
 
---
--- Indexes for table `users`
---
 ALTER TABLE `users`
   ADD PRIMARY KEY (`usersId`),
   ADD UNIQUE KEY `usersUsername` (`usersUsername`);
 
---
--- Indexes for table `users_meta`
---
 ALTER TABLE `users_meta`
   ADD PRIMARY KEY (`users_metaId`),
   ADD KEY `users_meta_fk_usersId` (`users_meta_fk_usersId`);
 
---
--- Indexes for table `users_profile`
---
 ALTER TABLE `users_profile`
   ADD PRIMARY KEY (`users_profileId`),
   ADD KEY `users_profile_fk_usersId` (`users_profile_fk_usersId`);
 
---
--- AUTO_INCREMENT for dumped tables
---
 
---
--- AUTO_INCREMENT for table `access`
---
 ALTER TABLE `access`
   MODIFY `accessId` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `articles`
---
 ALTER TABLE `articles`
   MODIFY `articlesId` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `articles_comments`
---
 ALTER TABLE `articles_comments`
   MODIFY `articles_commentsId` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `articles_meta`
---
 ALTER TABLE `articles_meta`
   MODIFY `articles_metaId` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `permissions`
---
+ALTER TABLE `image`
+  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `navigation`
+  MODIFY `navigationId` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `permissions`
   MODIFY `permissionsId` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `requirement`
---
 ALTER TABLE `requirement`
   MODIFY `requirementId` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `roles`
---
 ALTER TABLE `roles`
   MODIFY `rolesId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `settings`
---
 ALTER TABLE `settings`
   MODIFY `settingsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `users`
---
 ALTER TABLE `users`
   MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
---
--- AUTO_INCREMENT for table `users_meta`
---
 ALTER TABLE `users_meta`
   MODIFY `users_metaId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=286;
---
--- AUTO_INCREMENT for table `users_profile`
---
 ALTER TABLE `users_profile`
   MODIFY `users_profileId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -100,7 +100,7 @@ class Database {
             foreach ($this->bind as $row) $this->stmt->bindValue($row['name'], $row['data'], $row['type']);
             $this->bind = array(); // Unset bind again
             $this->stmt->execute();
-            return $this->stmt->rowCount();
+            return $this->stmt->lastInsertId(); // Use lastInsertId instead of rowCount, should help reduce code later on.
         } catch (PDOException $Exception) {
             throw new PDOException($Exception->getMessage(), (int) $Exception->getCode());
         }

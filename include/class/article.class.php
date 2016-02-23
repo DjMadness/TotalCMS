@@ -41,8 +41,11 @@ class Article extends D {
         foreach ($query as $row) array_push($return, array($row, $this->CountComments($row->articlesId)));
         return $query >= 1 ? json_encode(json_decode($return)) : false;
     }
-    public function ListArticles($limit = 10) {
-        
+    public function ListArticles($start = 0, $limit = 10) {
+        $this->Database->Bind('int', ':start', Validate::SanitizeInt($start));
+        $this->Database->Bind('int', ':limit', Validate::SanitizeInt($limit));
+        $query = $this->Database->Select('articles', '*', 'ORDER BY articlesDate DESC LIMIT :start, :limit');
+        return count($query) >= 1 ? json_encode(json_decode($query)): false;
     }
     public function VoteArticle($articlesId, $vote) {
         $this->Database->Bind('int', ':articlesId', Validate::SanitizeInt($articlesId));
@@ -53,9 +56,10 @@ class Article extends D {
     public function GetArticleMeta($articlesId, $setting) {
         $this->Database->Bind('int', ':articlesId', Validate::SanitizeInt($articlesId));
     }
-    public function GetComments($articlesId, $limit = 50) {
+    public function GetComments($articlesId, $start = 0, $limit = 50) {
         $this->Database->Bind('int', ':articles_commentsId', Validate::SanitizeInt($articlesId));
-        $query = $this->Database->Select('articles_comments', '*', 'WHERE articles_commentsId=:articles_commentsId');
+        $this->Database->Bind('int', ':limit', Validate::SanitizeInt($limit));
+        $query = $this->Database->Select('articles_comments', '*', 'WHERE articles_commentsId=:articles_commentsId ORDER BY articles_commentsDate DESC LIMIT :start, :limit');
         return count($query) >= 1 ? $query : false;
     }
     public function AddComment($articlesId, $usersId, $comment) {
@@ -84,6 +88,11 @@ class Article extends D {
         $query = $this->Database->Update('articles_comments', 'articles_commentsText=:articles_commentsText', 'WHERE articles_commentsId=:articles_commentsId');
         return $query >= 1 ? true : false;
     }
+    /*
+     * Handle votes and meta later on, i wont be using this yet, this is just to make a placeholder for stuff people might want
+     * This is for digg/reddit like up/downvoting etc., this is something that would need a enable/disable setting, 
+     * as it would turn the website into a more user usercontrolled way.
+     */
     public function VoteComment($commentId, $vote) {
         
     }

@@ -28,12 +28,15 @@ if (filter_input(INPUT_GET, 'do')) {
 
             break;
         case 'add_metadata':
+            display('adm_users/add_metadata.tpl');
             break;
         case 'del_metadata':
+            display('adm_users/del_metadata.tpl');
             break;
         case 'confirmdel_metadata':
             break;
         case 'edit_metadata':
+            display('adm_users/edit_metadata.tpl');
             break;
         case 'submit_metadata':
             break;

@@ -7,7 +7,8 @@
                 <tr>
                     <th>id</th>
                     <th>username</th>
-                    <th>date</th>
+                    <th>registration date</th>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>

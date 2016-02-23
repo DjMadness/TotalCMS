@@ -53,8 +53,10 @@ class Article extends D {
     public function GetArticleMeta($articlesId, $setting) {
         $this->Database->Bind('int', ':articlesId', Validate::SanitizeInt($articlesId));
     }
-    public function GetComments($articlesId) {
-        $this->Database->Bind('int', ':articlesId', Validate::SanitizeInt($articlesId));
+    public function GetComments($articlesId, $limit = 50) {
+        $this->Database->Bind('int', ':articles_commentsId', Validate::SanitizeInt($articlesId));
+        $query = $this->Database->Select('articles_comments', '*', 'WHERE articles_commentsId=:articles_commentsId');
+        return count($query) >= 1 ? $query : false;
     }
     public function AddComment($articlesId, $usersId, $comment) {
         $this->Database->Bind('int', ':articles_comments_fk_articlesId', Validate::SanitizeInt($articlesId));
@@ -79,8 +81,16 @@ class Article extends D {
     public function EditComment($articles_commentsId, $comment) {
         $this->Database->Bind('int', ':articles_commentsId', Validate::SanitizeInt($articles_commentsId));
         $this->Database->Bind('string', ':articles_commentsText', Validate::SanitizeString($comment));
+        $query = $this->Database->Update('articles_comments', 'articles_commentsText=:articles_commentsText', 'WHERE articles_commentsId=:articles_commentsId');
+        return $query >= 1 ? true : false;
     }
     public function VoteComment($commentId, $vote) {
+        
+    }
+    public function SetCommentMeta($articles_commentsId, $setting, $value) {
+        
+    }
+    public function GetcommentMeta($articles_commentsId, $setting) {
         
     }
 }

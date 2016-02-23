@@ -16,16 +16,26 @@ function users_error($users_error) {
 if (filter_input(INPUT_GET, 'do')) {
     switch (filter_input(INPUT_GET, 'do')) {
         case 'edit':
-            
+            display('adm_users/edit.tpl');
             break;
         case 'submit':
-            
+
             break;
         case 'delete':
-            
+            display('adm_users/delete.tpl');
             break;
         case 'delete_confirm':
-            
+
+            break;
+        case 'add_metadata':
+            break;
+        case 'del_metadata':
+            break;
+        case 'confirmdel_metadata':
+            break;
+        case 'edit_metadata':
+            break;
+        case 'submit_metadata':
             break;
         case 'list':
         default:

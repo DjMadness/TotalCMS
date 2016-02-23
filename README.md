@@ -1,3 +1,5 @@
+This project is not yet ready for production use, unless you plan to use the source, or maybe contribute to the projet.
+
 currently there is not really any documentation.
 This project is written in multiple languages, included but not limited to PHP, Smarty, javascript, css, html and SQL.
 It is meant to be a complete webpage, and will be improved apon reguraly by me personally, 

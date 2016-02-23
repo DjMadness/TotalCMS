@@ -31,7 +31,7 @@ if (filter_input(INPUT_GET, 'do')) {
             if (filter_input(INPUT_POST, 'settings_submit')) {
                 $settings_name = filter_input(INPUT_POST, 'settings_name', FILTER_SANITIZE_STRING);
                 $settings_value = filter_input(INPUT_POST, 'settings_value', FILTER_SANITIZE_STRING);
-                if (Settings::S()->Set($settings_name, $settings_value) == true) header('location: settings.php');
+                if (Settings::S()->Set($settings_name, $settings_value) == true) header('location: adm_settings.php');
                 else settings_error('Could not update setting');
             }
             break;
@@ -46,7 +46,7 @@ if (filter_input(INPUT_GET, 'do')) {
             break;
         case 'delete_confirm':
             if (filter_input(INPUT_POST, 'settings_id', FILTER_VALIDATE_INT)) {
-                if (Settings::S()->Delete(filter_input(INPUT_POST, 'settings_id')) == true) header('location: settings.php');
+                if (Settings::S()->Delete(filter_input(INPUT_POST, 'settings_id')) == true) header('location: adm_settings.php');
                 else settings_error('Could not delete setting');
             } else settings_list();
             break;

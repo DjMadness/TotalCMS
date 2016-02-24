@@ -4,9 +4,75 @@ class User extends D {
     public $Database;
     public function __construct() {
         parent::__construct();
+        $this->Setup();
     }
     private function Placeholder() {
         $this->Database = new Database();
+    }
+    private function Setup() {
+        /*
+         * This may look a bit messy, but it's due to its alot of tables.
+         */
+        $access = "CREATE TABLE IF NOT EXISTS `access` (
+            `accessId` int(11) NOT NULL AUTO_INCREMENT, 
+            `access_fk_rolesId` int(11) NOT NULL, 
+            `access_fk_usersId` int(11) NOT NULL, 
+            PRIMARY KEY (`accessId`),  
+            KEY `access_fk_rolesId` (`access_fk_rolesId`),  
+            KEY `access_fk_usersId` (`access_fk_usersId`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;";
+        $this->Database->RawQuery($access);
+        $permissions = "CREATE TABLE IF NOT EXISTS `permissions` (
+            `permissionsId` int(11) NOT NULL AUTO_INCREMENT,
+            `permissionsName` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+            `permissions_fk_roleId` int(11) DEFAULT NULL,
+            PRIMARY KEY (`permissionsId`),
+            KEY `permissions_fk_roleId` (`permissions_fk_roleId`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;";
+        $this->Database->RawQuery($permissions);
+        $requirement = "CREATE TABLE IF NOT EXISTS `requirement` (
+            `requirementId` int(11) NOT NULL AUTO_INCREMENT,
+            `requirementPagename` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+            `requirementAction` varchar(255) COLLATE utf8_danish_ci NOT NULL DEFAULT 'null',
+            `requirement_fk_permissionsName` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+            PRIMARY KEY (`requirementId`),
+            KEY `requirement_fk_permissionsName` (`requirement_fk_permissionsName`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;";
+        $this->Database->RawQuery($requirement);
+        $roles = "CREATE TABLE IF NOT EXISTS `roles` (
+            `rolesId` int(11) NOT NULL AUTO_INCREMENT,
+            `rolesName` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+            PRIMARY KEY (`rolesId`),
+            UNIQUE KEY `rolesName` (`rolesName`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;";
+        $this->Database->RawQuery($roles);
+        $users = "CREATE TABLE IF NOT EXISTS `users` (
+            `usersId` int(11) NOT NULL AUTO_INCREMENT,
+            `usersUsername` varchar(64) NOT NULL,
+            `usersPassword` varchar(128) NOT NULL,
+            `usersDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (`usersId`),
+            UNIQUE KEY `usersUsername` (`usersUsername`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=287 DEFAULT CHARSET=utf8;";
+        $this->Database->RawQuery($users);
+        $users_meta = "CREATE TABLE IF NOT EXISTS `users_meta` (
+            `users_metaId` int(11) NOT NULL AUTO_INCREMENT,
+            `users_metaSetting` varchar(128) NOT NULL,
+            `users_metaValue` varchar(255) NOT NULL,
+            `users_meta_fk_usersId` int(11) NOT NULL,
+            PRIMARY KEY (`users_metaId`),
+            KEY `users_meta_fk_usersId` (`users_meta_fk_usersId`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=286 DEFAULT CHARSET=utf8;";
+        $this->Database->RawQuery($users_meta);
+        $users_profile = "CREATE TABLE IF NOT EXISTS `users_profile` (
+            `users_profileId` int(11) NOT NULL AUTO_INCREMENT,
+            `users_profileSetting` varchar(254) DEFAULT NULL,
+            `users_profileValue` text,
+            `users_profile_fk_usersId` int(11) NOT NULL,
+            PRIMARY KEY (`users_profileId`),
+            KEY `users_profile_fk_usersId` (`users_profile_fk_usersId`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=287 DEFAULT CHARSET=utf8;";
+        $this->Database->RawQuery($users_profile);
     }
     public function Adduser($username, $password, $rpassword) {
         if ($this->GetIdByUsername($username) != false) return false;

@@ -1,5 +1,5 @@
 {block name=body}
-    <section class="dialog">
+    <section class="center-dialog">
         <h3>Login</h3>
         <p>You can login with the form below</p>
         {if isset($login_error)}<p class="error">{$login_error}</p>{/if}

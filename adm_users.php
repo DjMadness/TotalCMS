@@ -16,7 +16,10 @@ function users_error($users_error) {
 if (filter_input(INPUT_GET, 'do')) {
     switch (filter_input(INPUT_GET, 'do')) {
         case 'edit':
-            display('adm_users/edit.tpl');
+            if (filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) {
+                $Smarty->assign('users_list', User::S()->GetByUserid(filter_input(INPUT_GET, 'id')));
+                display('adm_users/edit.tpl');
+            } else users_error('user does not exist');
             break;
         case 'submit':
 

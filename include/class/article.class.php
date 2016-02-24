@@ -8,6 +8,48 @@ class Article extends D {
     private function Placeholder() {
         $this->Database = new Database();
     }
+    private function Setup() {
+        $articles = "CREATE TABLE IF NOT EXISTS `articles` (
+            `articlesId` int(11) NOT NULL AUTO_INCREMENT,
+            `articles_fk_usersId` int(11) NOT NULL,
+            `articlesDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+            `articles_fk_imageId` int(11) DEFAULT NULL,
+            `articlesTitle` varchar(255) NOT NULL,
+            `articlesText` text NOT NULL,
+            PRIMARY KEY (`articlesId`),
+            KEY `articles_fk_usersId` (`articles_fk_usersId`),
+            KEY `articles_fk_imageId` (`articles_fk_imageId`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $this->Database->RawQuery($articles);
+        $articles_comments = "CREATE TABLE IF NOT EXISTS `articles_comments` (
+            `articles_commentsId` int(11) NOT NULL AUTO_INCREMENT,
+            `articles_commentsDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+            `articles_comments_fk_articlesId` int(11) NOT NULL,
+            `articles_comments_fk_usersId` int(11) NOT NULL,
+            `articles_commentsText` text NOT NULL,
+            PRIMARY KEY (`articles_commentsId`),
+            KEY `articles_comments_fk_articlesId` (`articles_comments_fk_articlesId`,`articles_comments_fk_usersId`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $this->Database->RawQuery($articles_comments);
+        $articles_comments_meta = "CREATE TABLE IF NOT EXISTS `articles_comments_meta` (
+            `articles_comments_metaId` int(11) NOT NULL AUTO_INCREMENT,
+            `articles_comments_meta_fk_articles_commentsId` int(11) NOT NULL,
+            `articles_comments_metaSetting` varchar(128) NOT NULL,
+            `articles_comments_metaValue` varchar(255) NOT NULL,
+            PRIMARY KEY (`articles_comments_metaId`),
+            KEY `articles_comments_meta_fk_articles_commentsId` (`articles_comments_meta_fk_articles_commentsId`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $this->Database->RawQuery($articles_comments_meta);
+        $articles_meta = "CREATE TABLE IF NOT EXISTS `articles_meta` (
+            `articles_metaId` int(11) NOT NULL AUTO_INCREMENT,
+            `articles_meta_fk_articlesId` int(11) NOT NULL,
+            `articles_metaSetting` varchar(128) NOT NULL,
+            `articles_metaValue` varchar(255) NOT NULL,
+            PRIMARY KEY (`articles_metaId`),
+            KEY `articles_meta_fk_articlesId` (`articles_meta_fk_articlesId`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $this->Database->RawQuery($articles_meta);
+    }
     public function AddArticle($usersId, $title, $text, $imageId = null) {
         $this->Database->Bind('int', ':usersId', Validate::SanitizeInt($usersId));
         $this->Database->Bind('string', ':articlesTitle', Validate::SanitizeString($title));
@@ -45,7 +87,7 @@ class Article extends D {
         $this->Database->Bind('int', ':start', Validate::SanitizeInt($start));
         $this->Database->Bind('int', ':limit', Validate::SanitizeInt($limit));
         $query = $this->Database->Select('articles', '*', 'ORDER BY articlesDate DESC LIMIT :start, :limit');
-        return count($query) >= 1 ? json_encode(json_decode($query)): false;
+        return count($query) >= 1 ? json_encode(json_decode($query)) : false;
     }
     public function VoteArticle($articlesId, $vote) {
         $this->Database->Bind('int', ':articlesId', Validate::SanitizeInt($articlesId));
@@ -59,7 +101,8 @@ class Article extends D {
     public function GetComments($articlesId, $start = 0, $limit = 50) {
         $this->Database->Bind('int', ':articles_commentsId', Validate::SanitizeInt($articlesId));
         $this->Database->Bind('int', ':limit', Validate::SanitizeInt($limit));
-        $query = $this->Database->Select('articles_comments', '*', 'WHERE articles_commentsId=:articles_commentsId ORDER BY articles_commentsDate DESC LIMIT :start, :limit');
+        $query = $this->Database->Select('articles_comments', '*',
+            'WHERE articles_commentsId=:articles_commentsId ORDER BY articles_commentsDate DESC LIMIT :start, :limit');
         return count($query) >= 1 ? $query : false;
     }
     public function AddComment($articlesId, $usersId, $comment) {

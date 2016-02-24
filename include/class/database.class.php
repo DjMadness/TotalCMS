@@ -86,7 +86,7 @@ class Database {
             foreach ($this->bind as $row) $this->stmt->bindValue($row['name'], $row['data'], $row['type']);
             $this->bind = array(); // Unset bind again
             $this->stmt->execute();
-            return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+            return json_decode(json_encode($this->stmt->fetchAll(PDO::FETCH_OBJ))); // decode the encoded
         } catch (PDOException $Exception) {
             throw new PDOException($Exception->getMessage(), (int) $Exception->getCode());
         }

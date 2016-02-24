@@ -50,6 +50,7 @@ if (filter_input(INPUT_GET, 'do')) {
             display('adm_users/add_profile.tpl');
             break;
         case 'add_profile_submit':
+            
             break;
         case 'submit_metadata':
             break;

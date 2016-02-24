@@ -25,7 +25,10 @@ if (filter_input(INPUT_GET, 'do')) {
 
             break;
         case 'delete':
-            display('adm_users/delete.tpl');
+            if (filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) {
+                $Smarty->assign('users_list', User::S()->GetByUserid(filter_input(INPUT_GET, 'id')));
+                display('adm_users/delete.tpl');
+            } else users_error('user does not exist');
             break;
         case 'delete_confirm':
 

@@ -8,6 +8,20 @@ class Navigation extends D {
     private function Placeholder() {
         $this->Database = new Database();
     }
+    private function Setup() {
+        $query = "CREATE TABLE `navigation` (
+            `navigationId` int(11) NOT NULL,
+            `navigationName` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+            `navigationLink` varchar(255) COLLATE utf8_danish_ci NOT NULL,
+            `navigationType` varchar(128) COLLATE utf8_danish_ci NOT NULL,
+            `navigation_fk_imageId` int(11) DEFAULT NULL,
+            `navigationPos` int(11) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
+            ALTER TABLE `navigation` ADD PRIMARY KEY (`navigationId`),
+            ADD KEY `navigation_fk_imageId` (`navigation_fk_imageId`);
+            ALTER TABLE `navigation` MODIFY `navigationId` int(11) NOT NULL AUTO_INCREMENT;";
+        $this->Database->RawQuery($query);
+    }
     public function AddNav($name, $url, $type, $position, $imageId = null) {
         $this->Database->Bind('string', ':navigationName', Validate::SanitizeString($name));
         $this->Database->Bind('string', ':navigationUrl', Validate::SanitizeURL($url));

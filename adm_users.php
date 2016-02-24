@@ -31,7 +31,6 @@ if (filter_input(INPUT_GET, 'do')) {
             } else users_error('user does not exist');
             break;
         case 'delete_confirm':
-
             break;
         case 'add_metadata':
             display('adm_users/add_metadata.tpl');
@@ -41,8 +40,11 @@ if (filter_input(INPUT_GET, 'do')) {
             break;
         case 'confirmdel_metadata':
             break;
-        case 'edit_metadata':
-            display('adm_users/edit_metadata.tpl');
+        case 'del_profile':
+            display('adm_users/del_profile.tpl');
+            break;
+        case 'add_profile':
+            display('adm_users/add_profile.tpl');
             break;
         case 'submit_metadata':
             break;

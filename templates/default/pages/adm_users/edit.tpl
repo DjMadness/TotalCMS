@@ -27,6 +27,7 @@
                         <div class="row">
                             <label for="form_{$key}">{$key}</label>
                             <input type="text" name="form_email" placeholder="Email" value="{$profile}" />
+                            <a href='?del_profile&amp;id={$row->usersId}'>Delete {$key}</a>
                         </div>
                     {else}
                         <div class="row">

@@ -2,4 +2,4 @@
 
 session_start();
 include('include/header.php');
-display('index.tpl');
+display('mail/list.tpl');

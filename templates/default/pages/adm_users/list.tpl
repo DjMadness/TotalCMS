@@ -8,6 +8,7 @@
                     <th>id</th>
                     <th>username</th>
                     <th>registration date</th>
+                    <th>Email</th>
                     <td></td>
                 </tr>
             </thead>
@@ -17,6 +18,11 @@
                         <td>{$row->usersId}</td>
                         <td>{$row->usersUsername}</td>
                         <td>{$row->usersDate}</td>
+                            {foreach from=$row->metadata item=metadata key=key}
+                                {if $key == 'email'}
+                                    <td>{$metadata|lower}</td>
+                                {/if}
+                            {/foreach}
                         <td>
                             <a href='?do=edit&amp;id={$row->usersId}'>Edit</a> 
                             <a href='?do=delete&amp;id={$row->usersId}'>Delete</a>

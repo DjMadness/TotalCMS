@@ -5,12 +5,12 @@ include('include/header.php');
 // TODO: ADD PERMISSIONS
 function articles_list() {
     global $Smarty;
-    $Smarty->assign('users_list', User::S()->GetAllUsers());
+    $Smarty->assign('articles_list', Article::S()->ListArticles());
     display('adm_articles/list.tpl');
 }
 function articles_error($articles_error) {
     global $Smarty;
-    $Smarty->assign('userss_error', $articles_error);
+    $Smarty->assign('articles_error', $articles_error);
     display('adm_articles/error.tpl');
 }
 if (filter_input(INPUT_GET, 'do')) {
@@ -45,7 +45,7 @@ if (filter_input(INPUT_GET, 'do')) {
             break;
         case 'list':
         default:
-            users_list();
+            articles_list();
             break;
     }
-} else users_list();
+} else articles_list();

@@ -1,5 +1,5 @@
 <?php
-
+session_destroy();
 session_start();
 include('include/header.php');
-display('logout.tpl');
+header('location: index.php');

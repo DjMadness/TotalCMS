@@ -37,8 +37,8 @@
                     {/if}
                 {/foreach}
             {/foreach}
-            <input type='submit' name='settings_submit' value='Save' class='btn_ok'/>
-            <button class='btn_cancel'><a href='settings.php'>Cancel</a></button>    
+            <input type='submit' name='users_submit' value='Save' class='btn_ok'/>
+            <button class='btn_cancel'><a href='adm_users.php'>Cancel</a></button>    
         </form>
     </section>
 {/block}

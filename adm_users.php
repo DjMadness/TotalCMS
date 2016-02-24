@@ -49,6 +49,8 @@ if (filter_input(INPUT_GET, 'do')) {
         case 'add_profile':
             display('adm_users/add_profile.tpl');
             break;
+        case 'add_profile_submit':
+            break;
         case 'submit_metadata':
             break;
         case 'list':

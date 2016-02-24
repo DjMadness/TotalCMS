@@ -1,7 +1,7 @@
 {block name=body}
     <section class='dialog'>
-        <h3>Add user setting</h3>
-        <p>Below you can add a user setting</p>
+        <h3>Add user profile setting</h3>
+        <p>Below you can add a user profile setting</p>
         <form action='?do=add_profile_submit' method='POST'>
             <div class="row">
                 <label for="form_setting">Setting</label>

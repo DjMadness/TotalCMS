@@ -7,7 +7,7 @@
                 <input type='hidden' name='settings_id' value='{$row->settingsId}'/>
             {/foreach}
             <input type='submit' name='settings_submit' value='Yes' class='btn_ok'/>
-            <button class='btn_cancel'><a href='settings.php'>No</a></button>    
+            <button class='btn_cancel'><a href='adm_settings.php'>No</a></button>    
         </form>
     </section>
 {/block}

@@ -43,6 +43,9 @@ if (filter_input(INPUT_GET, 'do')) {
         case 'del_profile':
             display('adm_users/del_profile.tpl');
             break;
+        case 'del_profileconfirm':
+            
+            break;
         case 'add_profile':
             display('adm_users/add_profile.tpl');
             break;

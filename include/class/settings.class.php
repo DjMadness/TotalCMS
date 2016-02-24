@@ -4,9 +4,32 @@ class Settings extends D {
     public $Database;
     public function __construct() {
         parent::__construct();
+        $this->Setup();
     }
     private function Placeholder() {
         $this->Database = new Database();
+    }
+    /*
+     * Sure importing an SQL file would be easier, but there is too little control over that.
+     */
+    private function Setup() {
+        $query = "CREATE TABLE IF NOT EXISTS `settings` (
+            `settingsId` int(11) NOT NULL AUTO_INCREMENT, 
+            `settingsName` varchar(128) NOT NULL, 
+            `settingsValue` varchar(255) NOT NULL, 
+            PRIMARY KEY (`settingsId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+            ALTER TABLE `settings` ADD PRIMARY KEY (`settingsId`); 
+            ALTER TABLE `settings` MODIFY `settingsId` int(11) NOT NULL AUTO_INCREMENT;";
+        
+        $this->Database->RawQuery($query);
+        if(!$this->Get('admin_email')) $this->Set ('admin_email', 'admin@poorly.configured.website.net');
+        if(!$this->Get('theme_selected')) $this->Set ('theme_selected', 'default'); // always revert to default theme
+        if(!$this->Get('website_description')) $this->Set ('website_description', 'Website description');
+        if(!$this->Get('website_author')) $this->Set ('website_author', 'poorly configured');
+        if(!$this->Get('website_keywords')) $this->Set ('website_keywords', 'no,keywords,here');
+        if(!$this->Get('website_footer')) $this->Set ('website_footer', 'insert footer text here');
+        if(!$this->Get('website_charset')) $this->Set ('website_charset', 'uft-8');
+        if(!$this->Get('website_title')) $this->Set ('website_title', 'Default website title');
     }
     public function Set($setting, $value) {
         $check = $this->Get($setting); // Get before the new bind

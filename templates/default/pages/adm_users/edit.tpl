@@ -18,6 +18,7 @@
                         <div class="row">
                             <label for="form_{$key}">{$key}</label>
                             <input type="text" name="form_email" placeholder="{$key}" value="{$metadata}" />
+                            <a href='?del_metadata&amp;id={$row->usersId}'>Delete {$key}</a>
                         </div>
                     {/if}
                 {/foreach}

@@ -26,6 +26,7 @@
             <div class="row">
                 <label for="register_tos">Accept TOS ?</label>
                 <input type="checkbox" name="register_tos"/>
+                <a href="tos.php">Terms of service</a>
             </div>
             <input type="submit" name="register_submit" value="Register"/>
         </form>
